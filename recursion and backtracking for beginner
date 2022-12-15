@@ -242,3 +242,413 @@ public class Main {
               }
           
           }          
+
+
+
+
+
+
+          Question Print Zigzag
+          Easy
+          
+          1. Here are a few sets of inputs and outputs for your reference
+          Input1 -> 1
+          Output1 -> 1 1 1
+          
+          Input2 -> 2
+          Output2 -> 2 1 1 1 2 1 1 1 2
+          
+          Input2 -> 3
+          Output3 -> 3 2 1 1 1 2 1 1 1 2 3 2 1 1 1 2 1 1 1 2 3
+          
+          2. Figure out the pattern and complete the recursive function pzz to achieve the above for any positive number n.
+          
+          Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is.Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+          
+          Constraints
+          1 <= n <= 10
+
+
+
+
+          import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn= new Scanner(System.in);
+        int n= scn.nextInt();
+        pzz(n);
+    }
+
+    public static void pzz(int n){
+       if(n==0){
+           return;
+       }
+        System.out.print(n +" ");
+        pzz(n-1);
+        System.out.print(n+" ");
+        pzz(n-1);
+        System.out.print(n+" ");
+        
+    }
+
+}
+
+
+
+
+      Question  Tower Of Hanoi
+      Easy
+      
+      Tower Of Hanoi
+      
+      1. There are 3 towers. Tower 1 has n disks, where n is a positive number. Tower 2 and 3 are empty. 2. The disks are increasingly placed in terms of size such that the smallest disk is on top and largest disk is at bottom. 3. You are required to 3.1. Print the instructions to move the disks. 3.2. from tower 1 to tower 2 using tower 3 3.3. following the rules 3.3.1 move 1 disk at a time. 3.3.2 never place a smaller disk under a larger disk. 3.3.3 you can only move a disk at the top. Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is.Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+      
+      
+      Constraints
+      0 <= n <= 9 10 <= n1, n2, n3 <= 10^9 n1 != n2 != n3
+
+      import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+       Scanner scn=new Scanner(System.in);
+       int n=scn.nextInt();
+       int t1id=scn.nextInt();
+       int t2id=scn.nextInt();
+       int t3id=scn.nextInt();
+       toh(n,t1id,t2id,t3id);
+
+    }
+
+    public static void toh(int n, int t1id, int t2id, int t3id){
+        if(n==0){
+            return;
+        }
+     toh(n-1,t1id,t3id,t2id);
+     System.out.println( n+"["+t1id+" -> "+t2id+"]");
+     toh(n-1,t3id,t2id,t1id);   
+    }
+
+}
+
+
+
+Question Display Array
+Easy
+
+1. You are given a number n, representing the size of array a.
+2. You are given n numbers, representing elements of array a.
+3. You are required to print the elements of array from beginning to end each in a separate line.
+4. For the above purpose complete the body of displayArr function. Don't change the signature.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+1 <= n <= 30
+0 <= n1, n2, .. n elements <= 10
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int []arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scn.nextInt();
+        }
+        displayArr(arr,0);
+    }
+
+    public static void displayArr(int[] arr, int idx){
+        if(idx==arr.length){
+         return;
+        }
+        System.out.println(arr[idx]);
+        displayArr(arr,idx+1);
+    }
+
+}
+
+
+
+ Question   Display Array In Reverse
+ Easy
+ 
+ 1. You are given a number n, representing the size of array a.
+ 2. You are given n numbers, representing elements of array a.
+ 3. You are required to print the elements of array from end to beginning each in a separate line.
+ 4. For the above purpose complete the body of displayArrReverse function. Don't change the signature.
+ 
+ Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+ 
+ Constraints
+ 1 <= n <= 30
+ 0 <= n1, n2, .. n elements <= 10
+
+
+ import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int []arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scn.nextInt();
+        }
+        displayArrReverse(arr,arr.length-1);
+    }
+
+    public static void displayArrReverse(int[] arr, int idx) {
+        if(idx==0){
+            System.out.println(arr[0]);
+            return ;
+        }
+        System.out.println(arr[idx]);
+        displayArrReverse(arr,idx-1);
+        
+    }
+
+}
+
+
+
+
+      Question Max Of An Array
+      Easy
+      
+      1. You are given a number n, representing the count of elements.
+      2. You are given n numbers.
+      3. You are required to find the maximum of input. 
+      4. For the purpose complete the body of maxOfArray function. Don't change the signature.
+      
+      Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+      
+      Constraints
+      1 <= n <= 10^4
+      0 <= n1, n2, .. n elements <= 10 ^9
+
+
+
+      import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int []arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=scn.nextInt();
+        }
+       int ans= maxOfArray(arr,0);
+        System.out.println(ans);
+    }
+
+    public static int maxOfArray(int[] arr, int idx){
+        if(idx==arr.length-1){
+                return arr[idx];
+                  }
+        int val=maxOfArray(arr,idx+1);
+        int max=Math.max(val,arr[idx]);
+
+        return max;
+    }
+
+}
+
+
+
+    Question  First Index
+    Easy
+    
+    1. You are given a number n, representing the count of elements.
+    2. You are given n numbers.
+    3. You are given a number x. 
+    4. You are required to find the first index at which x occurs in array a.
+    5. If x exists in array, print the first index where it is found otherwise print -1.
+    
+    Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+    
+    Constraints
+    1 <= n <= 10^4
+    0 <= n1, n2, .. n elements <= 10 ^ 3
+    0 <= x <= 10 ^ 3
+
+    import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int []a=new int[n];
+        for(int i=0;i<n;i++){
+            a[i]=scn.nextInt();
+        }
+        int x=scn.nextInt();
+        int fi=firstIndex(a,0,x);
+        System.out.println(fi);
+    }
+
+    public static int firstIndex(int[] arr, int idx, int x){
+       if(idx==arr.length){
+           return -1;
+       }
+      int firstIndexfromnextidx= firstIndex(arr,idx+1,x);
+       if(x==arr[idx]){
+           return idx;
+           
+       }
+      else{
+          return firstIndexfromnextidx;
+        }
+           
+       
+       
+       
+    }
+
+}
+
+
+      Question  Last Index
+      Easy
+      
+      1. You are given a number n, representing the count of elements.
+      2. You are given n numbers.
+      3. You are given a number x. 
+      4. You are required to find the last index at which x occurs in array a.
+      5. If x exists in array, print the last index where it is found otherwise print -1.
+      
+      Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+      
+      Constraints
+      1 <= n <= 10^4
+      0 <= n1, n2, .. n elements <= 10 ^ 3
+      0 <= x <= 10 ^ 3
+
+
+
+      import java.io.*;
+      import java.util.*;
+      
+      public class Main {
+      
+          public static void main(String[] args) throws Exception {
+              // write your code here
+              Scanner scn=new Scanner(System.in);
+              int n=scn.nextInt();
+              int []a=new int[n];
+              for(int i=0;i<a.length;i++){
+                  a[i]=scn.nextInt();
+              }
+              int x=scn.nextInt();
+              int lastidx=lastIndex(a,a.length-1,x);
+              System.out.println(lastidx);
+          }
+      
+          public static int lastIndex(int[] arr, int idx, int x){
+              if(idx==0){
+                  return -1;
+              }
+              int lastindexrecursion=lastIndex(arr,idx-1,x);
+              if(arr[idx]==x){
+                  return idx;
+              }
+              else{
+               return lastindexrecursion;
+              }
+          }
+      
+      }
+
+
+
+
+      Question All Indices Of Array
+      Easy
+      
+      1. You are given a number n, representing the count of elements. 
+      
+      2. You are given n numbers.
+      
+      3. You are given a number x. 
+      
+      4. You are required to return the all indices at which x occurs in array a. 
+      
+      5. Return an array of appropriate size which contains all indices at which x occurs in array 
+      
+      6. If no such element exist print "NO OUTPUT" a. 
+      
+      
+      
+      Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+      
+      
+      Constraints
+      1 <= n <= 10^4 0 <= n1, n2, .. n elements <= 10 ^ 3 0 <= x <= 10 ^ 3
+      //the solution is not fully correct. All test cases are not passed
+      NEed to improvise
+      import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
+        }
+        int x = Integer.parseInt(br.readLine());
+        int[] iarr = allIndices(arr, x, 0, 0);
+
+        if(iarr.length == 0){
+            System.out.println();
+            return;
+        }
+
+        for(int i = 0; i < iarr.length; i++){
+            System.out.println(iarr[i]);
+        }
+    }
+
+    public static int[] allIndices(int[] arr, int x, int idx, int fsf) {
+       if(idx==arr.length){
+           return new int[fsf];//return an arr of foundsofar size
+       }
+       if(arr[idx]==x){
+          int []recAns=allIndices(arr,x,idx+1,fsf+1);
+          recAns[fsf]=idx;
+          return recAns;
+
+       }
+       else{
+            int []recAns=allIndices(arr,x,idx+1,fsf);
+            return recAns;
+       }
+    }
+
+}
