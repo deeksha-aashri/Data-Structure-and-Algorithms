@@ -652,3 +652,901 @@ public class Main {
     }
 
 }
+
+
+                //Question Get Subsequence
+Easy
+
+1. You are given a string str. 2. Complete the body of getSS function - without changing signature - to calculate all subsequences of str. Use sample input and output to take idea about subsequences. Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+
+Constraints
+0 <= str.length <= 20
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+         Scanner scn=new Scanner(System.in);
+         String str=scn.nextLine();
+         ArrayList<String> number_of_ss=gss(str);
+         System.out.println(number_of_ss);
+
+    }
+
+    public static ArrayList<String> gss(String str) {
+        if(str.length()==0){
+            ArrayList<String> baseres = new ArrayList<>();
+            baseres.add("");
+            return baseres;
+        }
+        char ch=str.charAt(0);
+        String ros=str.substring(1);
+        //faith
+        ArrayList<String> recAns = gss(ros);
+        //my work 
+        ArrayList<String> myres = new ArrayList<>(); 
+        for(int i=0;i<recAns.size();i++){
+            String element_from_recAns=recAns.get(i);
+            myres.add(element_from_recAns);
+           
+        }
+        for(int i=0;i<recAns.size();i++){
+            String element_from_recAns=recAns.get(i);
+            myres.add(ch+element_from_recAns);
+           
+        }
+
+
+          return myres;
+          
+            }
+
+}
+
+
+
+               Question   Get Kpc
+               Easy
+               
+               1. You are given a string str. The string str will contains numbers only, where each number stands for a key pressed on a mobile phone.
+               2. The following list is the key to characters map :
+                   0 -> .;
+                   1 -> abc
+                   2 -> def
+                   3 -> ghi
+                   4 -> jkl
+                   5 -> mno
+                   6 -> pqrs
+                   7 -> tu
+                   8 -> vwx
+                   9 -> yz
+               3. Complete the body of getKPC function - without changing signature - to get the list of all words that could be produced by the keys in str.
+               Use sample input and output to take idea about output.
+               
+               Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.                 
+               
+               Constraints
+               0 <= str.length <= 10
+               str contains numbers only
+               
+               
+               import java.io.*;
+               import java.util.*;
+               
+               public class Main {
+               
+                   public static void main(String[] args) throws Exception {
+                        Scanner scn=new Scanner(System.in);
+                        String str=scn.nextLine();
+                        ArrayList<String> ans=getKPC(str);
+                        System.out.println(ans);
+                   }
+                static String []codes={".;","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
+                   
+                   
+                   public static ArrayList<String> getKPC(String str) {
+                           if(str.length()==0){
+                               ArrayList<String> bres = new ArrayList<>();
+                               bres.add("");
+                               return bres;
+                           }
+               
+                      //Faith: For 479.. 79 will get the possible names stored in an arr
+                     
+                          char ch=str.charAt(0); 
+                          String ros=str.substring(1);
+               
+                          ArrayList <String> recAns=getKPC(ros);//<-faith
+                      //work: whatever letters correspond to 4.. I need to make their P&C with the faith's arr
+                                //need codes corresponding to 4
+                               
+                               
+                                String wrt_ch=codes[ch-'0'];//"jkl"
+                                  ArrayList<String> final_list = new ArrayList<>();
+                                for(int i=0;i<wrt_ch.length();i++){
+                                    char c=wrt_ch.charAt(i);
+                                  
+                                    for(int j=0;j<recAns.size();j++){
+                                      final_list.add(c+recAns.get(j));
+                                    }
+                                }
+                                return final_list;
+                   }
+               
+               }
+
+
+
+               Question  Get Stair Paths
+               Easy
+               
+               1. You are given a number n representing number of stairs in a staircase.
+               2. You are standing at the bottom of staircase. You are allowed to climb 1 step, 2 steps or 3 steps in one move.
+               3. Complete the body of getStairPaths function - without changing signature - to get the list of all paths that can be used to climb the staircase up.
+               Use sample input and output to take idea about output.
+               
+               Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+               
+               Constraints
+               0 <= n <= 10
+
+
+               import java.io.*;
+               import java.util.*;
+               
+               public class Main {
+               
+                   public static void main(String[] args) throws Exception {
+                    Scanner scn=new Scanner (System.in);
+                    int n=scn.nextInt();
+                    ArrayList<String>res=getStairPaths(n);
+                    System.out.println(res);
+               
+                   }
+               
+                   public static ArrayList<String> getStairPaths(int n) {
+                       if(n==0){
+                           ArrayList<String > bres = new ArrayList<>();
+                          bres.add("");
+                          return bres;
+                           
+                       }
+                       if(n<0){
+                           return new ArrayList<>();
+                       }
+                      ArrayList<String> paths = new ArrayList<>();
+                        ArrayList<String>p1= getStairPaths(n-1);
+                         ArrayList<String>p2= getStairPaths(n-2);
+                        ArrayList<String>p3=   getStairPaths(n-3);
+                        for(String path:p1){
+                          paths.add("1"+path);
+                        }
+                         for( String path:p2){
+                          paths.add("2"+path);
+                        }
+                         for(String path:p3){
+                          paths.add("3"+path);
+                        }
+                       return paths;
+                   }
+               
+               }
+
+
+
+               Question  Get Maze Paths
+               Easy
+               
+               1. You are given a number n and a number m representing number of rows and columns in a maze.
+               2. You are standing in the top-left corner and have to reach the bottom-right corner. Only two moves are allowed 'h' (1-step horizontal) and 'v' (1-step vertical).
+               3. Complete the body of getMazePath function - without changing signature - to get the list of all paths that can be used to move from top-left to bottom-right.
+               Use sample input and output to take idea about output.
+               
+               Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+               
+               Constraints
+               0 <= n <= 10
+               0 <= m <= 10
+
+
+
+               import java.io.*;
+               import java.util.*;
+               
+               public class Main {
+               
+                   public static void main(String[] args) throws Exception {
+                    Scanner scn=new Scanner (System.in);
+                    int n=scn.nextInt();
+                    int m=scn.nextInt();
+                    ArrayList <String> res=getMazePaths(0,0,n-1,m-1);
+                    System.out.println(res);
+                   }
+               
+                   // sr - source row
+                   // sc - source column
+                   // dr - destination row
+                   // dc - destination column
+                   public static ArrayList<String> getMazePaths(int sr, int sc, int dr, int dc) {
+                    if(sr==dr && sc==dc){
+                        ArrayList<String> bres= new ArrayList<>();
+                          bres.add("");
+                          return bres;
+                    }
+                    if(sr>dr || sc>dc){
+                        return  new ArrayList<>();
+                    }
+                    ArrayList<String> allpaths = new ArrayList<>();  
+                    ArrayList<String> hpaths=getMazePaths(sr,sc+1,dr,dc);
+                      ArrayList<String> vpaths=getMazePaths(sr+1,sc,dr,dc);
+                      for(String path:hpaths){
+                          allpaths.add("h"+path);
+                      }
+                       for(String path:vpaths){
+                          allpaths.add("v"+path);
+                      }
+                      return allpaths;
+                   }
+               
+               }
+
+
+
+               //Question  Get Maze Path With Jumps
+Easy
+
+1. You are given a number n and a number m representing number of rows and columns in a maze.
+2. You are standing in the top-left corner and have to reach the bottom-right corner. 
+3. In a single move you are allowed to jump 1 or more steps horizontally (as h1, h2, .. ), or 1 or more steps vertically (as v1, v2, ..) or 1 or more steps diagonally (as d1, d2, ..). 
+4. Complete the body of getMazePath function - without changing signature - to get the list of all paths that can be used to move from top-left to bottom-right.
+Use sample input and output to take idea about output.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+0 <= n <= 10
+0 <= m <= 10
+
+//Need to complete
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+
+    }
+
+    // sr - source row
+    // sc - source column
+    // dr - destination row
+    // dc - destination column
+    public static ArrayList<String> getMazePaths(int sr, int sc, int dr, int dc) {
+        return null;
+    }
+
+
+}
+
+
+
+//        Question  Print Subsequence
+Easy
+
+1. You are given a string str.
+2. Complete the body of printSS function - without changing signature - to calculate and print all subsequences of str.
+Use sample input and output to take idea about subsequences.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+0 <= str.length <= 7
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+ Scanner scn=new Scanner(System.in);
+ String str=scn.nextLine();
+ printSS(str,"");
+    }
+
+    public static void printSS(String str, String asf) {
+        if(str.length()==0){
+            System.out.println(asf);
+            return;
+        }
+        char c=str.charAt(0);
+        String ros=str.substring(1);
+        //include
+        printSS(ros,asf+c);
+        //exclude
+        printSS(ros,asf);
+    }
+
+}
+
+
+
+//Question Print Kpc
+Easy
+
+1. You are given a string str. The string str will contains numbers only, where each number stands for a key pressed on a mobile phone. 2. The following list is the key to characters map 0 -> .; 1 -> abc 2 -> def 3 -> ghi 4 -> jkl 5 -> mno 6 -> pqrs 7 -> tu 8 -> vwx 9 -> yz 3. Complete the body of printKPC function - without changing signature - to print the list of all words that could be produced by the keys in str. Use sample input and output to take idea about output. Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+
+Constraints
+0 <= str.length <= 10 str contains numbers only
+
+
+mport java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+Scanner scn=new Scanner(System.in);
+String str=scn.nextLine();
+printKPC(str,"");
+    }
+static String[] code={".;","abc","def","ghi","jkl","mno","pqrs","tu","vwx","yz"};
+    public static void printKPC(String str, String asf) {
+        if(str.length()==0){
+            System.out.println(asf);
+            return;
+        }
+        char ch=str.charAt(0);
+        String ros=str.substring(1);
+        String tobeExpressed= code[ch-'0'];
+        for(int i=0;i<tobeExpressed.length();i++){
+         char c=tobeExpressed.charAt(i);
+         printKPC(ros,asf+c);
+
+        }
+    }
+
+}
+
+
+
+//Question Print Stair Paths
+Easy
+
+1. You are given a number n representing number of stairs in a staircase.
+2. You are standing at the bottom of staircase. You are allowed to climb 1 step, 2 steps or 3 steps in one move.
+3. Complete the body of printStairPaths function - without changing signature - to print the list of all paths that can be used to climb the staircase up.
+Use sample input and output to take idea about output.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+0 <= n <= 10
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+Scanner scn = new Scanner(System.in);
+int n=scn.nextInt();
+printStairPaths(n,"");
+    }
+
+    public static void printStairPaths(int n, String path) {
+       if(n==0){
+           System.out.println(path);
+           return;
+       }
+       if(n<0){
+           return;
+        
+       }
+
+        printStairPaths(n-1,path+"1");
+        printStairPaths(n-2,path+"2");
+        printStairPaths(n-3,path+"3");
+    }
+
+}
+
+
+//Question Print Maze Paths
+Easy
+
+1. You are given a number n and a number m representing number of rows and columns in a maze.
+2. You are standing in the top-left corner and have to reach the bottom-right corner. Only two moves are allowed 'h' (1-step horizontal) and 'v' (1-step vertical).
+3. Complete the body of pri tMazePath function - without changing signature - to print the list of all paths that can be used to move from top-left to bottom-right.
+Use sample input and output to take idea about output.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+0 <= n <= 10
+0 <= m <= 10
+
+
+mport java.io.*;
+	import java.util.*;
+
+	public class Main {
+
+	    public static void main(String[] args) throws Exception {
+      Scanner scn=new Scanner(System.in);
+	  int n=scn.nextInt();
+	  int m=scn.nextInt();
+	  printMazePaths(0,0,n-1,m-1,"");
+	    }
+
+	    // sr - source row
+	    // sc - source column
+	    // dr - destination row
+	    // dc - destination column
+	    public static void printMazePaths(int sr, int sc, int dr, int dc, String asf) {
+	        //Negative Base Case
+			if(sr>dr || sc>dc){
+				return;
+			}
+			if(sr==dr && sc==dc){
+				System.out.println(asf);
+				return;
+			}
+			printMazePaths(sr,sc+1,dr,dc,asf+"h");
+			printMazePaths(sr+1,sc,dr,dc,asf+"v");
+	    }
+
+	}
+
+
+
+    //Question   Print Maze Paths With Jumps
+    Easy
+    
+    1. You are given a number n and a number m representing number of rows and columns in a maze.
+    2. You are standing in the top-left corner and have to reach the bottom-right corner. 
+    3. In a single move you are allowed to jump 1 or more steps horizontally (as h1, h2, .. ), or 1 or more steps vertically (as v1, v2, ..) or 1 or more steps diagonally (as d1, d2, ..). 
+    4. Complete the body of printMazePath function - without changing signature - to print the list of all paths that can be used to move from top-left to bottom-right.
+    Use sample input and output to take idea about output.
+    
+    Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+    
+    Constraints
+    0 <= n <= 5
+    0 <= m <= 5
+
+
+
+    import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn=new Scanner(System.in);
+        int dr=scn.nextInt();
+        int dc=scn.nextInt();
+        printMazePaths(0,0,dr-1,dc-1,"");
+        
+
+    }
+
+    // sr - source row
+    // sc - source column
+    // dr - destination row
+    // dc - destination column
+    public static void printMazePaths(int sr, int sc, int dr, int dc, String psf) {
+      if(sr>dr ||sc>dc){
+          return;
+      }
+          if(sr==dr &&sc==dc){
+              System.out.println(psf);
+              return;
+          }
+          for(int jumps=1;jumps<=dc-sc;jumps++){
+ printMazePaths(sr,sc+jumps,dr,dc,psf+"h"+jumps);
+          }
+          for(int jumps=1;jumps<=dr-sr;jumps++){
+ printMazePaths(sr+jumps,sc,dr,dc,psf+"v"+jumps);
+          }
+         for(int jumps=1;jumps<=Math.min(dr-sr,dc-sc);jumps++){
+ printMazePaths(sr+jumps,sc+jumps,dr,dc,psf+"d"+jumps);
+          }
+         
+      
+    }
+
+}
+
+
+
+                     Question Print Permutations
+Easy
+
+1. You are given a string str.
+2. Complete the body of printPermutations function - without changing signature - to calculate and print all permutations of str.
+Use sample input and output to take idea about permutations.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+0 <= str.length <= 7
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+     Scanner scn=new Scanner (System.in);
+     String str=scn.nextLine();
+     printPermutations(str,"");
+    }
+
+    public static void printPermutations(String str, String asf) {
+        if(str.length()==0){
+            System.out.println(asf);
+            return;
+        }
+        for(int i=0;i<str.length();i++){
+            char ch=str.charAt(i);
+            String ros=str.substring(0,i)+str.substring(i+1);
+            
+            printPermutations(ros,asf+ch);
+        }
+    }
+
+}
+
+
+
+           //  Question 
+           Print Encodings
+Easy
+
+1. You are given a string str of digits. (will never start with a 0)
+2. You are required to encode the str as per following rules
+    1 -> a
+    2 -> b
+    3 -> c
+    ..
+    25 -> y
+    26 -> z
+3. Complete the body of printEncodings function - without changing signature - to calculate and print all encodings of str.
+Use the input-output below to get more understanding on what is required
+123 -> abc, aw, lc
+993 -> iic
+013 -> Invalid input. A string starting with 0 will not be passed.
+103 -> jc
+303 -> No output possible. But such a string maybe passed. In this case print nothing.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+0 <= str.length <= 10
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn=new Scanner(System.in);
+        String str=scn.nextLine();
+        printEncodings(str,"");
+
+    }
+
+    public static void printEncodings(String str, String asf) {
+        if(str.length()==0){
+            System.out.println(asf);
+            return;
+        }
+        //Step01
+        String ch0=str.substring(0,1);
+        String ros=str.substring(1);
+        //Step 02
+        if(ch0.equals("0")) return;
+        printEncodings(ros,asf+(char)(Integer.parseInt(ch0)-1+'a'));
+        //Step 03 
+        if(str.length()>=2){
+            String ch01=str.substring(0,2);
+            //Step 04
+            String ros2=str.substring(2);
+            //Step 05
+            if(Integer.parseInt(ch01)<=26){
+                printEncodings(ros2,asf+(char)(Integer.parseInt(ch01)-1+'a'));
+            }
+        }
+    }
+
+}
+
+
+
+//Question  Flood Fill
+Easy
+
+1. You are given a number n, representing the number of rows.
+2. You are given a number m, representing the number of columns.
+3. You are given n*m numbers, representing elements of 2d array a. The numbers can be 1 or 0 only.
+4. You are standing in the top-left corner and have to reach the bottom-right corner. 
+Only four moves are allowed 't' (1-step up), 'l' (1-step left), 'd' (1-step down) 'r' (1-step right). You can only move to cells which have 0 value in them. You can't move out of the boundaries or in the cells which have value 1 in them (1 means obstacle)
+5. Complete the body of floodfill function - without changing signature - to print all paths that can be used to move from top-left to bottom-right.
+
+Note1 -> Please check the sample input and output for details
+Note2 -> If all four moves are available make moves in the order 't', 'l', 'd' and 'r'
+
+Constraints
+1 <= n <= 10
+1 <= m <= 10
+e1, e2, .. n * m elements belongs to set (0, 1)
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        int m = scn.nextInt();
+        int[][] arr = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                arr[i][j] = scn.nextInt();
+            }
+        }
+
+        boolean visited[][]=new boolean[n][m];
+        floodfill(arr, 0, 0, "",visited);
+    }
+
+
+
+    // asf -> answer so far
+    public static void floodfill(int[][] maze, int sr, int sc, String asf,boolean [][]visited) {
+        // Negative Base Case
+        if(sr<0 || sc<0 || sr>=maze.length || sc>=maze[0].length || maze[sr][sc]==1 || visited[sr][sc]==true){
+            return ;
+        }
+        // Positive base case
+        if(sr==maze.length-1 && sc==maze[0].length-1){
+            System.out.println(asf);
+            return ;
+        }
+        visited[sr][sc]=true;
+        floodfill(maze,sr-1,sc,asf+"t",visited);
+        floodfill(maze,sr,sc-1,asf+"l",visited);
+        floodfill(maze,sr+1,sc,asf+"d",visited);
+        floodfill(maze,sr,sc+1,asf+"r",visited);
+        visited[sr][sc]=false;
+
+
+    }
+}
+
+
+
+//Question  Target Sum Subsets
+Easy
+
+1. You are given a number n, representing the count of elements.
+2. You are given n numbers.
+3. You are given a number "tar".
+4. Complete the body of printTargetSumSubsets function - without changing signature - to calculate and print all subsets of given elements, the contents of which sum to "tar". Use sample input and output to get more idea.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+1 <= n <= 30
+0 <= n1, n2, .. n elements <= 20
+0 <= tar <= 50
+
+//solution not fully correct. All test cases have not passed
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+Scanner scn=new Scanner (System.in);
+int n=scn.nextInt();
+int arr[]=new int[n];
+for(int i=0;i<arr.length;i++){
+    arr[i]=scn.nextInt();
+    
+}
+int tar=scn.nextInt();
+printTargetSumSubsets(arr,tar,0,"");
+    }
+
+    // set is the subset
+    // sos is sum of subset
+    // tar is target
+    public static void printTargetSumSubsets(int[] arr, int target, int idx,String set) {
+    if(target==0){
+        System.out.println(set+".");
+    return;
+    }    
+    else if(idx==arr.length){
+        return;
+    }
+    int ele=arr[idx];
+    if(ele<=target){
+        printTargetSumSubsets(arr,target-ele,idx+1,set+ele+", ");
+
+    }
+    printTargetSumSubsets(arr,target,idx+1,set);
+    }
+
+}
+
+
+//Question   N Queens
+Easy
+
+1. You are given a number n, the size of a chess board.
+2. You are required to place n number of queens in the n * n cells of board such that no queen can kill another.
+Note - Queens kill at distance in all 8 directions
+3. Complete the body of printNQueens function - without changing signature - to calculate and print all safe configurations of n-queens. Use sample input and output to get more idea.
+
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Constraints
+1 <= n <= 10
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int [][]chess=new int [n][n];    //  int type chess array then line 23 will have filling as 1 and line 25 will have unvisiting as 0
+       printNQueens(chess,"",0);
+    
+        
+    }
+
+    public static void printNQueens(int[][] chess, String qsf, int row) {
+        //base case
+        if(row==chess.length){
+            System.out.println(qsf+".");
+            return;
+        }
+        for(int col=0;col<chess.length;col++){
+            if(isSafe(chess,row,col)==true){
+                chess[row][col]=1;   // MARK VISITED
+                printNQueens(chess,qsf+row+"-"+col+", ",row+1); // call
+                chess[row][col]=0; // mark unvisited
+            }
+        }
+    }
+       
+        public static boolean isSafe(int [][]chess,int row, int col){
+            // we only need to check these 3 positions before placing our queen
+            // because hum jis row mei hain waha aur koi q nahi hogi
+            // humse neeche wali row mei bhi nahi hogi toh ye panncho dir ka check useless hai
+            //diagonal right upwards
+            for(int i=row-1,j=col+1;i>=0 && j<chess.length;i--,j++){
+                if(chess[i][j]==1){
+                    return false;
+                }
+            }
+            // same column but in all rows preceding ours
+            for(int i=row-1;i>=0 ;i--){
+                if(chess[i][col]==1){
+                    return false;
+                }
+        }
+        //diag left upwards
+        for(int i=row-1,j=col-1;i>=0 && j>=0;i--,j--){
+                if(chess[i][j]==1){
+                    return false;
+                }
+    }
+    return true;
+}
+}
+
+
+
+//Question Knights Tour
+Easy
+
+1. You are given a number n, the size of a chess board.
+2. You are given a row and a column, as a starting point for a knight piece.
+3. You are required to generate the all moves of a knight starting in (row, col) such that knight visits 
+     all cells of the board exactly once.
+4. Complete the body of printKnightsTour function - without changing signature - to calculate and 
+     print all configurations of the chess board representing the route
+     of knight through the chess board. Use sample input and output to get more idea.
+
+Note -> When moving from (r, c) to the possible 8 options give first precedence to (r - 2, c + 1) and 
+               move in clockwise manner to
+               explore other options.
+Note -> The online judge can't force you to write the function recursively but that is what the spirit of 
+               question is. Write recursive and not iterative logic. The purpose of the question is to aid 
+               learning recursion and not test you.
+
+Constraints
+n = 5
+0 <= row < n
+0 <= col < n
+
+Format
+Input
+A number n
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        Scanner scn= new Scanner(System.in);
+        int n=scn.nextInt();
+        int r= scn.nextInt(); 
+        int c=scn.nextInt();
+        int [][] chess= new int[n][n];     // size of chess board
+        printKnightsTour(chess,r,c,1);   // when we are about to take the first move we are given the r and c where we need to go by the user and it will be the first move so upcoimng move=1 has to be passed
+    }
+
+    public static void printKnightsTour(int[][] chess, int r, int c, int upcomingMove) {
+       // Negative base case when surpassed the boards
+
+        if(r<0 || c<0 || r>=chess.length || c>=chess.length || chess[r][c]!=0){   // IMPORTANT POINT 1:  If c[r][c]=0 it means unvisited. So, if already visited return.Also,The order of conditions
+        // is imp as if we write c[r][c]!=0 before the other four we will get array index out of bounds. Since, while moving there will be times r and c will be negative and 
+            return;
+        }
+
+        //positive base case when the upcoming move is the n*n the move
+       if(upcomingMove==chess.length * chess.length){   // ye sirf batara hai upcoming position
+            chess[r][c]=upcomingMove; // fill karo upcoming position ko matlab jao uspar
+            displayBoard(chess); // display karo answer
+            chess[r][c]=0; // mark unvisited kyunki 24 tak toh ho jaenge unvistred mark but 25th yaha chala hai phir display kiya hai toh ab unvisited mark karenge warna bas ek hi answer milega
+            return;
+       }
+       
+       
+        chess[r][c]=upcomingMove;   //placing th passed r and c position as upcoming move
+         printKnightsTour(chess,r-2,c+1,upcomingMove+1);  // first call for move number 2   
+        printKnightsTour(chess,r-1,c+2,upcomingMove+1);
+        printKnightsTour(chess,r+1,c+2,upcomingMove+1);
+        printKnightsTour(chess,r+2,c+1,upcomingMove+1);
+        printKnightsTour(chess,r+2,c-1,upcomingMove+1);
+         printKnightsTour(chess,r+1,c-2,upcomingMove+1);
+          printKnightsTour(chess,r-1,c-2,upcomingMove+1);
+           printKnightsTour(chess,r-2,c-1,upcomingMove+1);
+           chess[r][c]=0; // marking unvisited
+        
+    }
+
+    public static void displayBoard(int[][] chess){
+        for(int i = 0; i < chess.length; i++){
+            for(int j = 0; j < chess[0].length; j++){
+                System.out.print(chess[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+    }
+}
