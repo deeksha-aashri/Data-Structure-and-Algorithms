@@ -310,3 +310,1199 @@ public class Main {
   }
 
 }
+
+
+     //Question
+
+     Iterative Pre, Post And Inorder Traversals Of Binary Tree
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are required to complete the body of iterativePrePostInTraversal function. The function is expected to print pre order, in order and post order of the tree in separate lines (first pre, then in and finally post order). All elements in an order must be separated by a space.
+3. Input is managed for you.
+
+Output
+pre order (elements separated by space)
+in order (elements separated by space)
+post order (elements separated by space)
+
+Example
+Sample Input
+
+19
+50 25 12 n n 37 30 n n n 75 62 n 70 n n 87 n n
+
+Sample Output
+50 25 12 37 30 75 62 70 87 
+12 25 30 37 50 62 70 75 87 
+12 30 37 25 70 62 87 75 50
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static void iterativePrePostInTraversal(Node node) {
+    // write your code here
+    Stack<Pair> st=new Stack<>();
+    st.push(new Pair(node,0));
+    String pre= "";
+    String in="";
+    String post="";
+   
+   while(st.size()>0){
+     Pair tos=st.peek();
+     if(tos.state==0){
+       pre+=tos.node.data+" ";
+       tos.state++;
+        if(tos.node.left!=null){
+         st.push(new Pair(tos.node.left,0));
+       }
+     }
+     
+     else if(tos.state==1){
+         in+=tos.node.data+" ";
+         tos.state++;
+         if(tos.node.right!=null){
+           st.push(new Pair(tos.node.right,0));
+         }
+
+     }
+     else if(tos.state==2){
+   post+=tos.node.data+" ";
+   st.pop();
+     }
+   }
+   System.out.println(pre);
+   System.out.println(in);
+   System.out.println(post);
+    
+  }
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    Node root = construct(arr);
+    iterativePrePostInTraversal(root);
+  }
+
+}
+
+
+    //Question Print K Levels Down
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are given a value k.
+3. You are required to complete the body of printKLevelsDown function. The function is expected to print in different lines all nodes which are k level deep. Use preorder for printing.
+4. Input is managed for you.
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static void printKLevelsDown(Node node, int k){
+    // write your code here
+    if(node==null) return;
+    if(k==0){
+      System.out.println(node.data);
+    }
+    printKLevelsDown(node.left,k-1);
+    printKLevelsDown(node.right,k-1);
+  }
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    int k = Integer.parseInt(br.readLine());
+
+    Node root = construct(arr);
+    printKLevelsDown(root, k);
+  }
+
+}
+
+
+
+
+       //Question Path To Leaf From Root In Range
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are given a value lo and a value hi
+3. You are required to complete the body of pathToLeafFromRoot function. The function is expected to print all paths from root to leaves which have sum of nodes in range from lo to hi (both inclusive). The elements in path should be separated by spaces. Each path should be in a separate line.
+4. Input is managed for you.
+
+Sample Input
+
+23
+50 25 12 n n 37 30 n n 40 n n 75 62 60 n n 70 n n 87 n n
+150
+250
+
+Sample Output
+50 25 37 40
+50 75 62 60
+50 75 87
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static void pathToLeafFromRoot(Node node, String path, int sum, int lo, int hi){
+    // write your code here
+    if(node==null ) return;
+    if(node.left==null && node.right==null){//leaf found
+    sum+=node.data;
+    if(sum>=lo && sum<=hi){
+      System.out.println(path+node.data);
+    }
+    return;
+    }
+     pathToLeafFromRoot(node.left,path+node.data+" ", sum+node.data,lo,hi);
+          pathToLeafFromRoot(node.right,path+node.data+" ", sum+node.data,lo,hi);
+
+  }
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    int lo = Integer.parseInt(br.readLine());
+    int hi = Integer.parseInt(br.readLine());
+
+    Node root = construct(arr);
+    pathToLeafFromRoot(root, "", 0, lo, hi);
+  }
+
+}
+
+
+      //Question Transform To Left-cloned Tree
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are required to complete the body of createLeftCloneTree function. The function is expected to create a new node for every node equal in value to it and inserted between itself and it's left child. Check question video for clarity.
+3. Input and Output is managed for you.
+
+Constraints
+None
+
+Format
+Input
+Input is managed for you.
+
+Output
+Output is managed for you.
+
+Example
+Sample Input
+
+15
+50 25 12 n n 37 n n 75 62 n n 87 n n
+
+Sample Output
+50 
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static void createLeftCloneTree(Node node){
+    // write your code here
+    if(node==null){
+      return ;
+    }
+    createLeftCloneTree(node.left);
+    createLeftCloneTree(node.right);
+   
+    Node cloned=new Node(node.data,node.left,null);
+    node.left=cloned;
+
+  }
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    Node root = construct(arr);
+     createLeftCloneTree(root);
+    display(root);
+  }
+
+}
+
+
+
+          //Question   Diameter Of A Binary Tree
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are required to complete the body of diameter1 function. The function is expected to return the number of edges between two nodes which are farthest from each other in terms of edges.
+3. Input and Output is managed for you.
+
+Constraints
+None
+
+Format
+Input
+Input is managed for you.
+
+Output
+Output is managed for you.
+
+Example
+Sample Input
+
+19
+50 25 12 n n 37 30 n n n 75 62 n 70 n n 87 n n
+
+Sample Output
+6
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static int height(Node node) {
+    if (node == null) {
+      return -1;
+    }
+
+    int lh = height(node.left);
+    int rh = height(node.right);
+
+    int th = Math.max(lh, rh) + 1;
+    return th;
+  }
+   static int dia=0;
+  public static int diameter1(Node node) {
+    // write your code here
+   if(node==null) {
+     return -1;
+   }
+   int leftheight=diameter1(node.left);
+   int rightheight=diameter1(node.right);
+   dia=Math.max(dia,leftheight+rightheight+2);
+   return Math.max(leftheight,rightheight)+1;
+  }
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    Node root = construct(arr);
+
+    int diameter = 0;
+    diameter = diameter1(root);
+    System.out.println(dia);
+  }
+
+}
+
+
+
+          //Question
+
+          Tilt Of Binary Tree
+Easy
+
+1. You are given a partially written BinaryTree class. 2. You are required to complete the body of tilt function. The function is expected to set the value of data member "tilt". "tilt" of a node is the absolute value of difference between sum of nodes in it's left subtree and right subtree. "tilt" of the whole tree is represented as the sum of "tilt"s of all it's nodes. 3. Input and Output is managed for you. Note -> Please refer the video for clarity.
+
+
+Constraints
+None
+
+Format
+Input
+Input is managed for you.
+
+Output
+Output is managed for you.
+
+Example
+Sample Input
+
+19
+50 25 12 n n 37 30 n n n 75 62 n 70 n n 87 n n
+
+Sample Output
+390
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static int height(Node node) {
+    if (node == null) {
+      return -1;
+    }
+
+    int lh = height(node.left);
+    int rh = height(node.right);
+
+    int th = Math.max(lh, rh) + 1;
+    return th;
+  }
+
+  static int tilt = 0;
+  public static int tilt(Node node){
+    // write your code here to set the tilt data member
+    if(node==null){
+      return 0;
+    }
+    int lefttilt=tilt(node.left);
+    int righttilt=tilt(node.right);
+     tilt+=Math.abs(lefttilt-righttilt);
+    
+     return lefttilt+righttilt+node.data;
+  }
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    Node root = construct(arr);
+
+    tilt(root);
+    System.out.println(tilt);
+  }
+
+}
+
+
+
+      //Question   Is A Binary Search Tree
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are required to check if the tree is a Binary Search Tree (BST) as well. In a BST every node has a value greater than all nodes on it's left side and smaller value than all node on it's right side.
+3. Input is managed for you. 
+
+Note -> Please refer the question video for clarity.
+
+Constraints
+Time complexity must be O(n)
+Space should not be more than required for recursion (call-stack)
+
+Format
+Input
+Input is managed for you.
+
+Output
+true if the tree is a BST, false otherwise
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  //Class to store the maxofleftsubtree, minofrightsubtree and a boolean which stores true if bst and false otherwise, for every node
+  public static class BSTPair {
+    int max;
+    int min;
+    boolean isBst;
+  }
+
+  //function to check if a treaa is bst
+  public static BSTPair isbst(Node node){
+    if(node==null){
+      BSTPair basepair=new BSTPair();
+      basepair.max=Integer.MIN_VALUE;
+      basepair.min=Integer.MAX_VALUE;
+      basepair.isBst=true;
+      return basepair;
+    }
+      
+      BSTPair leftPair=isbst(node.left);
+      BSTPair rightPair=isbst(node.right);
+    
+    BSTPair mypair=new BSTPair();
+    mypair.max=Math.max(Math.max(leftPair.max,rightPair.max),node.data);
+    mypair.min=Math.min(Math.min(leftPair.min,rightPair.min),node.data);
+
+    //to set isbst of mypair
+    if(leftPair.isBst==true && rightPair.isBst==true && leftPair.max<node.data && rightPair.min>node.data){
+      mypair.isBst=true;
+    }
+    else{
+      mypair.isBst=false;
+    }
+    return mypair;
+
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+
+  public static int height(Node node) {
+    if (node == null) {
+      return -1;
+    }
+
+    int lh = height(node.left);
+    int rh = height(node.right);
+
+    int th = Math.max(lh, rh) + 1;
+    return th;
+  }
+
+ 
+  
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+
+    Node root = construct(arr);
+    
+    // write your code here
+   BSTPair ans=isbst(root);
+   System.out.println(ans.isBst);
+    
+  }
+
+}
+
+
+
+
+           //QUestion   Is Balanced Tree
+Easy
+
+1. You are given a partially written BinaryTree class.
+2. You are required to check if the tree is balanced. A binary tree is balanced if for every node the gap between height's of it's left and right subtree is not more than 1.
+3. Input is managed for you. 
+
+Note -> Please refer the question video for clarity.
+
+Constraints
+Time complexity must be O(n)
+Space should not be more than required for recursion (call-stack)
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data, Node left, Node right) {
+      this.data = data;
+      this.left = left;
+      this.right = right;
+    }
+  }
+
+  public static class Pair {
+    Node node;
+    int state;
+
+    Pair(Node node, int state) {
+      this.node = node;
+      this.state = state;
+    }
+  }
+
+  public static Node construct(Integer[] arr) {
+    Node root = new Node(arr[0], null, null);
+    Pair rtp = new Pair(root, 1);
+
+    Stack<Pair> st = new Stack<>();
+    st.push(rtp);
+
+    int idx = 0;
+    while (st.size() > 0) {
+      Pair top = st.peek();
+      if (top.state == 1) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.left = new Node(arr[idx], null, null);
+          Pair lp = new Pair(top.node.left, 1);
+          st.push(lp);
+        } else {
+          top.node.left = null;
+        }
+
+        top.state++;
+      } else if (top.state == 2) {
+        idx++;
+        if (arr[idx] != null) {
+          top.node.right = new Node(arr[idx], null, null);
+          Pair rp = new Pair(top.node.right, 1);
+          st.push(rp);
+        } else {
+          top.node.right = null;
+        }
+
+        top.state++;
+      } else {
+        st.pop();
+      }
+    }
+
+    return root;
+  }
+
+  public static void display(Node node) {
+    if (node == null) {
+      return;
+    }
+
+    String str = "";
+    str += node.left == null ? "." : node.left.data + "";
+    str += " <- " + node.data + " -> ";
+    str += node.right == null ? "." : node.right.data + "";
+    System.out.println(str);
+
+    display(node.left);
+    display(node.right);
+  }
+  static boolean balance=true;
+    public static int isbalanced(Node node){
+      if(node==null){
+        return -1;
+      }
+      int leftheight=isbalanced(node.left);//gets height from left
+     int rightheight= isbalanced(node.right);//gets height from right
+          
+          if(Math.abs(leftheight-rightheight)>1){
+            balance= false;
+            
+          }
+          return Math.max(leftheight,rightheight)+1;
+    }
+  
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int n = Integer.parseInt(br.readLine());
+    Integer[] arr = new Integer[n];
+    String[] values = br.readLine().split(" ");
+    for (int i = 0; i < n; i++) {
+      if (values[i].equals("n") == false) {
+        arr[i] = Integer.parseInt(values[i]);
+      } else {
+        arr[i] = null;
+      }
+    }
+    
+
+    Node root = construct(arr);
+    isbalanced(root);
+    System.out.println(balance);
+    // write your code here
+    
+    
+
+  }
+
+}
