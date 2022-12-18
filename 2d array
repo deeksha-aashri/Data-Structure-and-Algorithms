@@ -1,0 +1,504 @@
+                //Question    Matrix Multiplication
+Easy
+
+1. You are given a number n1, representing the number of rows of 1st matrix.
+
+2. You are given a number m1, representing the number of columns of 1st matrix.
+
+3. You are given n1*m1 numbers, representing elements of 2d array a1.
+
+4. You are given a number n2, representing the number of rows of 2nd matrix.
+
+5. You are given a number m2, representing the number of columns of 2nd matrix.
+
+6. You are given n2*m2 numbers, representing elements of 2d array a2.
+
+7. If the two arrays representing two matrices of dimensions n1 * m1 and n2 * m2 can be multiplied, display the contents of product array as specified in output format.
+
+8. If the two arrays can't be multiplied, print "Invalid input".
+
+
+Constraints
+1 <= n1 <= 10^2
+
+1 <= m1 <= 10^2
+
+-10^9 <= e11, e12, .. n1 * m1 elements <= 10^9
+
+1 <= n2 <= 10^2
+
+1 <= m2 <= 10^2
+
+-10^9 <= e11', e12', .. n2 * m2 elements <= 10^9
+
+
+Format
+Input
+A number n1
+
+A number m1
+
+e11 e12.. e21 e22.. .. n1 * m1 number of elements of array a1
+
+A number n2
+
+A number m2
+
+e11' e12'.. e21' e22'.. .. n2 * m2 number of elements of array a2
+
+
+Output
+e11'' e12'' e13'' .. e21'' e22'' e23'' .. .. elements of prd array
+
+
+Example
+Sample Input
+
+2
+3
+10
+0
+0
+0
+20
+0
+3
+4
+1
+0
+1
+0
+0
+1
+1
+2
+1
+1
+0
+0
+
+Sample Output
+10 0 10 0
+0 20 20 40
+
+
+import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+   Scanner scn=new Scanner(System.in);
+   int n1=scn.nextInt();
+   int m1=scn.nextInt();
+   int a1[][]=new int[n1][m1];
+   for(int i=0;i<n1;i++){
+       for(int j=0;j<m1;j++){
+           a1[i][j]=scn.nextInt();
+       }
+   }
+   int n2=scn.nextInt();
+   int m2=scn.nextInt();
+   int a2[][]=new int[n2][m2];
+   for(int i=0;i<n2;i++){
+       for(int j=0;j<m2;j++){
+           a2[i][j]=scn.nextInt();
+       }
+   }
+   if(m1!=n2){
+       System.out.println("Invalid input");
+       return;
+   }
+   int product[][]=new int[n1][m2];
+   for(int i=0;i<n1;i++){
+       for(int j=0;j<m2;j++){
+           int val=0;
+           for(int k=0;k<m1;k++){
+               val+=a1[i][k]*a2[k][j];
+           }
+           product[i][j]=val;
+       }
+   }
+   for(int i=0;i<n1;i++){
+       for(int j=0;j<m2;j++){
+           System.out.print(product[i][j]+" ");
+       }
+       System.out.println();
+   }
+ }
+
+}
+
+                     //Question  The State Of Wakanda - 1
+                     Easy
+                     
+                     The historic state of Wakanda has various monuments and souvenirs which are visited by many travelers every day. The guides follow a prescribed route of visiting the monuments which improve them understand the relevance of each monument. 
+                     
+                     The route of the monument is fixed and expressed in a 2-d matrix where the travelers visit the prescribed next monument. For example
+                     
+                     1  2  3
+                     4  5  6
+                     7  8  9
+                     
+                     is the prescribed route and the visitors travels this path: 1->2->3->4->5->6->7->8->9
+                     
+                     However, a certain visitor decides to travel a different path as follows: 
+                     1. He first travels southwards till no further south places are available.
+                     2. He then moves only 1 place eastwards.
+                     3. He starts to move again towards north till any further north moves are available. 
+                     This continues till all the places are covered. 
+                     
+                     For example, the monuments are named as follows:
+                     1  2  3
+                     4  5  6
+                     7  8  9
+                     
+                     Path followed by traveler: 1->4->7->8->5->2->3->6->9
+                     
+                     You are required to print the path that this traveler follows to visit all places.
+                     
+                     
+                     1. You will be given a number n, representing the number of rows.
+                     2. You will be given a number m, representing the number of columns.
+                     3. You will be given n*m numbers, representing elements of 2d arrays.
+                     
+                     Note - Please check the output format for details.
+                     
+                     Constraints
+                     1 <= n <= 10^2
+                     1 <= m <= 10^2
+                     -10^9 <= e1, e2, .. n * m elements <= 10^9
+                     
+                     Format
+                     Input
+                     A number n
+                     A number m
+                     e11
+                     e12..
+                     e21
+                     e22..
+                     .. n * m number of elements
+                     
+                     Output
+                     e11
+                     e12
+                     e13
+                     ..
+                     e1n
+                     e2n
+                     e2n-1
+                     ..
+                     e21
+                     e31
+                     e32
+                     ..
+                     e3n
+                     e4n ..
+
+
+
+                     import java.io.*;
+import java.util.*;
+
+public class Main{
+
+public static void main(String[] args) throws Exception {
+    Scanner scn=new Scanner(System.in);
+    int n=scn.nextInt();
+    int m=scn.nextInt();
+    int arr[][]= new int[n][m];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            arr[i][j]=scn.nextInt();
+        }
+    }
+    for(int j=0;j<m;j++){
+        if(j%2==0){
+            for(int i=0;i<n;i++){
+                System.out.println(arr[i][j]);
+            }
+        }
+        else{
+            for(int i=n-1; i>=0;i--){
+                System.out.println(arr[i][j]);
+            }        }
+    }
+ }
+
+}
+
+
+              //Question Spiral Display
+              Easy
+              
+              1. You are given a number n, representing the number of rows.
+              2. You are given a number m, representing the number of columns.
+              3. You are given n*m numbers, representing elements of 2d array a.
+              4. You are required to traverse and print the contents of the 2d array in form of a spiral.
+              Note - Please check the sample output for details.
+              
+              Constraints
+              1 <= n <= 10^2
+              1 <= m <= 10^2
+              -10^9 <= e1, e2, .. n * m elements <= 10^9
+              
+              Format
+              Input
+              A number n
+              A number m
+              e11
+              e12..
+              e21
+              e22..
+              .. n * m number of elements
+              
+              Output
+              e11
+              e21
+              ..
+              en1
+              en2
+              en3
+              ..
+              enm
+              e(n-1)m
+              ..
+              e1m
+              e1(m-1)
+              ..
+              e12
+              e22
+              e32
+              ..
+              
+              Example
+              Sample Input
+              
+              3
+              5
+              11
+              12
+              13
+              14
+              15
+              21
+              22
+              23
+              24
+              25
+              31
+              32
+              33
+              34
+              35
+              
+              Sample Output
+              11
+              21
+              31
+              32
+              33
+              34
+              35
+              25
+              15
+              14
+              13
+              12
+              22
+              23
+              24
+
+
+              import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn= new Scanner(System.in);
+        int n =scn.nextInt();
+        int m=scn.nextInt();
+        int [][]a=new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0; j<m;j++){
+                a[i][j]=scn.nextInt();
+            }
+        }
+        int rmin=0;
+        int rmax=n-1;
+        int cmin=0;
+        int cmax=m-1;
+        int count=0;
+        while(count<n*m){
+            for(int row=rmin; row<=rmax && count<n*m; row++){
+                System.out.println(a[row][cmin]);
+                count++;
+            }
+            cmin++;
+            for( int col=cmin;col<=cmax && count<n*m;col++){
+                System.out.println(a[rmax][col]);
+                count++;
+            }
+            rmax--;
+            for(int row=rmax; row>=rmin && count< n*m; row--){
+                System.out.println(a[row][cmax]);
+                count++;
+            }
+            cmax--;
+            for(int col=cmax; col>=cmin && count<n*m; col--){
+                System.out.println(a[rmin][col]);
+                count++;
+            }
+            rmin++;
+        }
+    }
+
+}
+
+
+
+
+
+                     //Question   Exit Point Of A Matrix
+                     Easy
+                     
+                     1. You are given a number n, representing the number of rows.
+                     2. You are given a number m, representing the number of columns.
+                     3. You are given n*m numbers (1's and 0's), representing elements of 2d array a.
+                     4. Consider this array a maze and a player enters from top-left corner in east direction.
+                     5. The player moves in the same direction as long as he meets '0'. On seeing a 1, he takes a 90 deg right turn.
+                     6. You are required to print the indices in (row, col) format of the point from where you exit the matrix.
+                     
+                     Constraints
+                     1 <= n <= 10^2
+                     1 <= m <= 10^2
+                     e1, e2, .. n * m elements belongs to the set (0, 1)
+                     
+
+                     
+
+                     import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn= new Scanner(System.in);
+        int n=scn.nextInt();
+        int m=scn.nextInt();
+        int [][]arr=new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                arr[i][j]=scn.nextInt();
+            }
+        }
+        
+      
+                int dir=0;
+                int i=0;
+                int j=0;
+        while(true){
+            dir=(dir+arr[i][j])%4;
+            if(dir==0){
+                j++;
+                
+            }
+            else if(dir==1){
+                i++;
+                
+            }
+            else if(dir==2){
+                j--;
+                
+            }
+            else {
+                i--;
+              
+
+        }
+        if(j==m){
+                    j--;
+                    break;
+                }
+                if(i==n){
+                    i--;
+                    break;
+                }
+                 if(j==-1){
+                    j++;
+                    break;
+                }
+                 if(i==-1){
+                    i++;
+                    break;
+                }
+        }
+            System.out.println(i);
+            System.out.println(j);
+        
+    }
+}
+
+
+
+                //Question   Rotate By 90 Degree
+                Easy
+                
+                1. You are given a number n, representing the number of rows and number of columns.
+                2. You are given n*n numbers, representing elements of 2d array a.
+                3. You are required to rotate the matrix by 90 degree clockwise and then display the contents using display function.
+                *Note - you are required to do it in-place i.e. no extra space should be used to achieve it .*
+                
+                Constraints
+                1 <= n <= 10^2
+                -10^9 <= e1, e2, .. n * n elements <= 10^9
+
+                import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn= new Scanner(System.in);
+        int n= scn.nextInt();
+        int [][]arr= new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                arr[i][j]=scn.nextInt();
+            }
+        }
+        for(int i= 0;i<n-1;i++){  //transpose
+            for(int j=i+1;j<n;j++){
+                int temp=arr[i][j];
+                 arr[i][j]=arr[j][i];
+                  arr[j][i]=temp;
+            }
+        }
+        int left=0;
+        int right=n-1;
+        while(left<right){         //
+            for(int row=0;row<arr.length;row++){
+                int temp= arr[row][left];
+                 arr[row][left]=arr[row][right];
+                 arr[row][right]=temp;
+            }
+            left++;
+            right--;
+        }
+        display(arr);
+        }
+
+    public static void display(int[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[0].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+}
