@@ -502,3 +502,330 @@ public class Main {
     }
 
 }
+
+
+          //Question   Ring Rotate
+          Easy
+          
+          You are given a n*m matrix where n are the number of rows and m are the number of columns. You are also given n*m numbers representing the elements of the matrix.
+          You will be given a ring number 's' representing the ring of the matrix. For details, refer to image.
+          
+          shell-rotate
+          
+          You will be given a number 'r' representing number of rotations in an anti-clockwise manner of the specified ring.
+          You are required to rotate the 's'th ring by 'r' rotations and display the rotated matrix.
+
+
+          import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+
+        Scanner scn=new Scanner(System.in);
+
+        int n=scn.nextInt();
+        int m=scn.nextInt();
+        int [][]arr=new int [n][m];
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                arr[i][j]=scn.nextInt();
+            }
+        }
+        int s=scn.nextInt();
+        int r=scn.nextInt();
+
+        ringRotate(arr,s,r);
+        display(arr);
+    }
+
+
+
+    public static void ringRotate(int [][]arr,int s,int r){
+        // step-01 -> 1D array formation
+        int []la=fill1Dfrom2D(arr,s);
+
+        // Step-02 ->rotate the 1D array
+        rotate(la,r);
+
+        // Step-03 -> 2D array with 1D (la)
+
+        fill2Dwith1D(arr,s,la);
+
+
+    }
+
+    // Step-01
+    public static int[] fill1Dfrom2D(int [][]arr,int s){
+
+        int n=arr.length;
+        int m=arr[0].length;
+
+        int rmin=s-1;
+        int cmin=s-1;
+        int rmax=n-s;
+        int cmax=m-s;
+
+        int idx=0;
+
+        int sz=2*(rmax-rmin)+2*(cmax-cmin);
+        int la[]=new int[sz];
+
+        // left boundary
+
+        for(int row=rmin;row<=rmax;row++ ){
+            la[idx]=arr[row][cmin];
+            idx++;
+
+        }
+        cmin++;
+
+        // bottom boundary
+
+        for(int col=cmin;col<=cmax;col++){
+            la[idx]=arr[rmax][col];
+            idx++;
+        }
+        rmax--;
+
+        // right boundary
+
+        for(int row=rmax;row>=rmin;row--){
+            la[idx]=arr[row][cmax];
+            idx++;
+        }
+        cmax--;
+
+        // top boundary
+        for(int col=cmax;col>=cmin;col--){
+            la[idx]=arr[rmin][col];
+            idx++;
+        }
+
+        return la;
+
+
+
+
+    }
+
+    // Step-02
+
+    public static void rotate(int []la,int r){
+
+        r=r%la.length;
+
+        if(r<0) {
+            r+=la.length;
+        }
+
+        reverse(la,0,la.length-1);
+        reverse(la,0,r-1);
+        reverse(la,r,la.length-1);
+    }
+
+
+    public static void reverse(int []la,int left,int right){
+
+        while(left<right){
+
+            int temp=la[left];
+            la[left]=la[right];
+            la[right]=temp;
+
+            left++;
+            right--;
+        }
+    }
+
+
+    // step-03
+    public static void fill2Dwith1D(int [][]arr,int s,int []la){
+        int n=arr.length;
+        int m=arr[0].length;
+
+        int rmin=s-1;
+        int cmin=s-1;
+        int rmax=n-s;
+        int cmax=m-s;
+
+        int idx=0;
+
+
+        // left boundary
+
+        for(int row=rmin;row<=rmax;row++ ){
+            arr[row][cmin]=la[idx];
+            idx++;
+
+        }
+        cmin++;
+
+        // bottom boundary
+
+        for(int col=cmin;col<=cmax;col++){
+            arr[rmax][col]=la[idx];
+            idx++;
+        }
+        rmax--;
+
+        // right boundary
+
+        for(int row=rmax;row>=rmin;row--){
+            arr[row][cmax]=la[idx];
+            idx++;
+        }
+        cmax--;
+
+        // top boundary
+        for(int col=cmax;col>=cmin;col--){
+            arr[rmin][col]=la[idx];
+            idx++;
+        }
+
+    }
+
+
+    public static void display(int[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[0].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+}
+
+
+              //Question  The State Of Wakanda - 2
+              Easy
+              
+              The historic state of Wakanda has various monuments and souveniers which are visited by many travellers every day. The guides follow a prescribed route of visiting the monuments which improves them understand the relevance of each monument. The route of the monument is fixed and expressed in a 2-d matrix where the travellers visit the prescribed next monument. For example
+              1  2  3
+              4  5  6
+              7  8  9
+              is the prescribed route and the visitors travels this path: 1->2->3->4->5->6->7->8->9
+              However, a certain visitor decides to travel a different path as follows:
+              1. The visitor only plans to visit the upper diagonal triangle of the monument list.
+              2. The visitor travels diagonally till there are no more moves left in the current journey. 
+              3. He then visits the adjacent monument to the first monument of current diagonal journey. 
+              4. He continues the same path till all the monuments of the upper half have been travelled.
+              For Example:
+              The monuments are named as:
+              1    2    3    4
+              5    6    7    8
+              9   10  11  12
+              13 14  15  16
+              The path followed by the visitor is: 1->6->11->16->2->7->12->3->8->4
+              You are required to print the path followed by the traveller to visit all the monuments.
+              Refer to the photo for a better clarification.
+              1. You are given a number n, representing the number of rows and columns of a square matrix.
+              2. You are given n * n numbers, representing elements of 2d array a.
+              3. You are required to diagonally traverse the upper half of the matrix and print the contents.
+              For details check image.
+              
+              diagonal-traversal
+              
+              Constraints
+              1 <= n <= 10^2
+              -10^9 <= e11, e12, .. n * m elements <= 10^9
+
+
+
+              import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn= new Scanner (System.in);
+        int n=scn.nextInt();
+        int [][]arr=new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                arr[i][j]=scn.nextInt();
+            }
+        }
+        for(int diag=0;diag<=arr.length-1;diag++){
+            int i=0;
+            int j=diag;
+            while(j<=arr.length-1){
+                System.out.println(arr[i][j]);
+                i++;
+                j++;
+            }
+                
+             
+        }
+    }
+
+}
+
+
+
+            //Question   Saddle Price
+            Easy
+            
+            1. You are given a square matrix of size 'n'. You are given n*n elements of the square matrix. 
+            2. You are required to find the saddle price of the given matrix and print the saddle price. 
+            3. The saddle price is defined as the least price in the row but the maximum price in the column of the matrix.
+            
+            Constraints
+            1 <= n <= 10^2
+            -10^9 <= e11, e12, .. n * m elements <= 10^9
+
+
+            import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        // write your code here
+        Scanner scn=new Scanner(System.in);
+        int n=scn.nextInt();
+        int [][]arr=new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                arr[i][j]=scn.nextInt();
+            }
+        }
+        for(int i=0; i<n;i++){
+            //find the min in row and its corresponding column number.
+            int min=arr[i][0];
+            int colno=0;
+                for(int col=1;col<n;col++){
+                    if(arr[i][col]<min){
+                        min=arr[i][col];
+                        colno=col;
+                    }
+                }
+                //verification
+                boolean ans=true;
+                for(int row=0; row<n;row++){
+                    if(arr[row][colno]>min){
+                        ans=false;
+                        break;
+                    }
+                }
+                if(ans==true){
+                    System.out.println(min);
+                    return;
+                }
+        }
+        System.out.println("Invalid input");
+
+    }
+
+}
+
+
+
+            //Search in a 2d sorted array
+
+
